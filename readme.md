@@ -46,11 +46,12 @@ Clone this repo on your local system.
 ## Usage 
 
 To run this example you need to execute:
+$ cd terraform/
 
-$ terraform init # Make sure it installs all the required modules.
-$ terraform validate
-$ terraform plan 
-$ terraform apply
+$ terraform init # Make sure it installs all the required modules.\n
+$ terraform validate\n
+$ terraform plan \n
+$ terraform apply \n
 
 ## Domain name can be passed using variable domain_name in auto.tfvars file.
 Once the apply is complete, output should print the complete fqdn which can be accesed locally. A page refresh should show the private ip's of backend instances.
