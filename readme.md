@@ -15,7 +15,7 @@ Architecture :
 
 - An Amazon Route 53 Hosted Zone with a CNAME record set pointing to the DNS Name of the Load Balancer.
 
-- Data sources are used to discover existing VPC resources (VPC, subnet and security group).
+- Data sources are used to discover existing VPC resources (VPC, subnet , route53 zone , AMI and AZ).
 
 - This project also creates ACM SSL certificate which can be attached to a secure listener in ELB.
 
