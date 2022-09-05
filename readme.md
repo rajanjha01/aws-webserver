@@ -56,7 +56,17 @@ $ terraform plan
 
 $ terraform apply 
 
-## Domain name can be passed using variable domain_name in auto.tfvars file.
-Once the apply is complete, output should print the complete fqdn which can be accesed locally. A page refresh should show the private ip's of backend instances.
+## Outputs
+
+Domain name can be passed using variable domain_name in auto.tfvars file.
+| Name         | Description       |
+---------------|--------------------
+|elb-ws	       |The name of the ELB|
+|webserver-url |The complete url   |
+
+Once the apply is complete, output should print the complete fqdn which can be accesed locally. 
+A page refresh should show the private ip's of backend instances.
+
+
 
 
