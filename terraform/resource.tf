@@ -1,13 +1,18 @@
-## get the networking and linux image details for this account
-#############################################
+
+## get the networking and linux image details for this AWS account
+####################################################################
+
+## get vpc details
 data "aws_vpc" "default" {
   default = true
 }
+## get subnets for the vpc
 
 data "aws_subnet_ids" "public" {
   vpc_id = data.aws_vpc.default.id
 }
 
+## get AZ's
 data "aws_availability_zones" "allzones" {}
 
 ## get ami id 
@@ -33,10 +38,10 @@ data "aws_route53_zone" "studocu" {
   name         = "code.studucu.com."
   private_zone = false
 }
-## Create web server - backend instances, security groups and private subnets for the instances
-##############################################
+## Create private subnets, NAT gateway, Security group, Instance keys and Web server instances 
+##############################################################################################
 
-## create two different private subnets for studocu web instances
+## create two different private subnets for studocu web instances in separate az's
 
 resource "aws_subnet" "webprivate" {
   vpc_id            = data.aws_vpc.default.id
@@ -48,7 +53,7 @@ resource "aws_subnet" "webprivate" {
     Name = "Studocu-private-subnet-${count.index}"
   }
 }
-#########################################
+
 ## Create eip for nat
 resource "aws_eip" "studocu-EIP" { 
   vpc = true
@@ -91,8 +96,6 @@ resource "aws_route_table_association" "studocu-Nat-RT-Association" {
   
   route_table_id = aws_route_table.studocu-NAT-RT.id
 }
-
-########################################################################
 ## Create security groups for ec2 instances
 
 resource "aws_security_group" "websg" {
@@ -174,8 +177,8 @@ tags = {
   }
 }
 
-##Create ELB resources
-################################################################
+##Create AWS ELB resources and route 53 records
+###############################################
 
 ### Create acm certificate for the website using acm public module
 module "acm" {
@@ -195,8 +198,7 @@ module "acm" {
     Name = "code.studucu.com"
   }
 }
-
-########################################################
+## Create elb security group
 resource "aws_security_group" "elbsg" {
   name   = "security_group_for_elb"
   vpc_id = data.aws_vpc.default.id
