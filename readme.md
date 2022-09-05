@@ -15,10 +15,11 @@ Architecture :
 
 - An Amazon Route 53 Hosted Zone with a CNAME record set pointing to the DNS Name of the Load Balancer.
 
-- Data sources are used to discover existing VPC resources (VPC, subnet , route53 zone , AMI and AZ).
+Data sources are used to discover existing VPC resources (VPC, subnet , route53 zone , AMI and AZ).
 
-- This project also creates ACM SSL certificate which can be attached to a secure listener in ELB.
+This project also creates ACM SSL certificate which can be attached to a secure listener in ELB.
 
+This project is using local backend.
 
 
 
@@ -31,14 +32,21 @@ Configure AWS on your local system and create a profile to assume the role.
 - Configure AWS CLI
 - Create a source profile with your access key and secret access.
    cat ~/.aws/credentials
+
    [studocu]
+
    aws_access_key_id = XXXXXXXXXXXXXXXXXXX
+
    aws_secret_access_key = XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
      
 - Create a profile in ~/.aws/config
+
     [profile studocu]
+
     region = us-east-1
+
     role_arn = your_iam_role_arn
+
     source_profile = studocu
 
 Terraform -
