@@ -55,7 +55,7 @@ resource "aws_subnet" "webprivate" {
 }
 
 ## Create eip for nat
-resource "aws_eip" "studocu-EIP" { 
+resource "aws_eip" "studocu-EIP" {
   vpc = true
 }
 
@@ -66,7 +66,7 @@ resource "aws_nat_gateway" "studocu-NAT" {
     aws_eip.studocu-EIP
   ]
   allocation_id = aws_eip.studocu-EIP.id
-  subnet_id              = var.ps-useast1a
+  subnet_id     = var.ps-useast1a
   tags = {
     Name = "studocu-nat-gateway"
   }
@@ -78,7 +78,7 @@ resource "aws_route_table" "studocu-NAT-RT" {
   ]
   vpc_id = data.aws_vpc.default.id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.studocu-NAT.id
   }
   tags = {
@@ -90,10 +90,10 @@ resource "aws_route_table" "studocu-NAT-RT" {
 resource "aws_route_table_association" "studocu-Nat-RT-Association" {
   depends_on = [
     aws_route_table.studocu-NAT-RT
-  ] 
-  count                  = length(var.availability_zones)
-  subnet_id              = aws_subnet.webprivate[count.index].id
-  
+  ]
+  count     = length(var.availability_zones)
+  subnet_id = aws_subnet.webprivate[count.index].id
+
   route_table_id = aws_route_table.studocu-NAT-RT.id
 }
 ## Create security groups for ec2 instances
@@ -150,9 +150,9 @@ resource "local_file" "ssh_key" {
 ## Create ec2 instances in separate private subnets and avilability zones
 
 resource "aws_instance" "studocu-webserver" {
-  depends_on        = [
+  depends_on = [
     aws_nat_gateway.studocu-NAT
-    ]  
+  ]
   count                  = length(var.availability_zones)
   ami                    = data.aws_ami.mylinuxami.id
   instance_type          = var.instance-type
@@ -163,7 +163,7 @@ resource "aws_instance" "studocu-webserver" {
     create_before_destroy = true
   }
 
-user_data = <<-EOF
+  user_data = <<-EOF
 #!/bin/bash
 sudo -i
 yum install -y httpd.x86_64
@@ -172,7 +172,7 @@ echo "$(curl http://169.254.169.254/latest/meta-data/local-ipv4)" > /var/www/htm
 service httpd restart
 EOF
 
-tags = {
+  tags = {
     Name = "studocu-webserver-${count.index}"
   }
 }
@@ -239,8 +239,8 @@ resource "aws_security_group" "elbsg" {
 resource "aws_elb" "elb-ws" {
   name               = "elb-webserver"
   availability_zones = var.availability_zones
-  security_groups = [aws_security_group.elbsg.id]
-  internal        = false
+  security_groups    = [aws_security_group.elbsg.id]
+  internal           = false
 
   listener {
 
