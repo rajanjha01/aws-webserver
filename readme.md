@@ -1,11 +1,11 @@
 
-## Terraform Project to create a Loadbalanced website hosted on AWS cloud.
+## Terraform Project to create a Loadbalanced website hosted on AWS cloud
 
 Architecture : 
 
 - Elastic Load Balancer in public subnet.
 
-- Amazon EC2 instances in different az's and private subnets.
+- Two Amazon EC2 instances in different az's and private subnets.
 
 - Security group on Load Balancer permitting port 80 & 443 from 0.0.0.0/0.
 
@@ -15,7 +15,7 @@ Architecture :
 
 - An Amazon Route 53 Hosted Zone with a CNAME record set pointing to the DNS Name of the Load Balancer.
 
-Prerequisite -
+## Prerequisites 
 
 AWS -
 
@@ -43,7 +43,7 @@ Github -
 Clone this repo on your local system.
 
 
-Usage :
+## Usage 
 
 To run this example you need to execute:
 
@@ -51,5 +51,8 @@ $ terraform init # Make sure it installs all the required modules.
 $ terraform validate
 $ terraform plan 
 $ terraform apply
+
+## Domain name can be passed using variable domain_name in auto.tfvars file.
+Once the apply is complete, output should print the complete fqdn which can be accesed locally. A page refresh should show the private ip's of backend instances.
 
 
