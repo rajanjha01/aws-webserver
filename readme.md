@@ -56,6 +56,30 @@ $ terraform plan
 
 $ terraform apply 
 
+## Resources
+
+|             Name	                                    |             Type          |
+--------------------------------------------------------|----------------------------
+|aws_vpc.default                                        |        data source        |
+|aws_subnet_ids.public                                  |        data source        |
+|aws_availability_zones.allzones                        |        data source        |
+|aws_ami.mylinuxami                                     |        data source        |
+|aws_route53_zone.studocu                               |        data source        | 
+|aws_subnet.webprivate                                  |        private subnets    |
+|aws_eip.studocu-EIP                                    |        elastic ip         |
+|aws_nat_gateway.studocu-NAT                            |        nat gateway        |
+|aws_route_table.studocu-NAT-RT                         |        route table        |
+|aws_route_table_association.studocu-Nat-RT-Association |        route table assoc  |
+|aws_security_group.websg                               |        instance sg        |
+|tls_private_key.key_pair                               |        keypair            |
+|aws_key_pair.key_pair                                  |        ker pair           |
+|local_file.ssh_key                                     |        saved key pair     |
+|aws_instance.studocu-webserver                         |        webserver          |
+|module.acm                                             |        acm                |
+|aws_security_group.elbsg                               |        lb security group  |
+|aws_elb.elb-ws                                         |        elb for web server |
+|aws_route53_record.studocu-url                         |        cname record       |
+
 ## Outputs
 
 Domain name can be passed using variable domain_name in auto.tfvars file.
